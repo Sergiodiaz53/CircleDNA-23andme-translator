@@ -3,6 +3,9 @@
 ## Overview
 
 This Python script converts genetic data files from Circle format to a 23andMe-like format. It provides a simple command-line tool to transform genetic data files by restructuring columns and formatting.
+This will allow you to use pages like genomelink.io, geneticgenie.org, selfdecode.com...
+
+In order to get your CircleDNA raw data, you have to write an email to care[at]circledna.com with your information.
 
 ## Installation
 
