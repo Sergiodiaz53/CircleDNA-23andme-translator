@@ -1,4 +1,4 @@
-# Genetic Data File Converter
+# CircleDNA-23andme translator
 
 ## Overview
 
