@@ -4,11 +4,6 @@
 
 This Python script converts genetic data files from Circle format to a 23andMe-like format. It provides a simple command-line tool to transform genetic data files by restructuring columns and formatting.
 
-## Prerequisites
-
-- Python 3.7+
-- No external dependencies required
-
 ## Installation
 
 1. Clone the repository:
