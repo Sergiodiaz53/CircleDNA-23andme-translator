@@ -4,13 +4,6 @@
 
 This Python script converts genetic data files from Circle format to a 23andMe-like format. It provides a simple command-line tool to transform genetic data files by restructuring columns and formatting.
 
-## Features
-
-- Convert genetic data files with a single command
-- Supports custom input and output file paths
-- Robust error handling
-- Simple and straightforward data transformation
-
 ## Prerequisites
 
 - Python 3.7+
@@ -20,18 +13,18 @@ This Python script converts genetic data files from Circle format to a 23andMe-l
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/genetic-data-converter.git
-   cd genetic-data-converter
+   git clone https://github.com/Sergiodiaz53/CircleDNA-23andme-translator.git
+   cd CircleDNA-23andme-translator
    ```
 
-2. Ensure you have Python installed (3.7 or later recommended)
+2. Ensure you have Python installed (Tested in Python 3.11.9)
 
 ## Usage
 
 ### Basic Usage
 
 ```bash
-python genetic_data_converter.py -i input_file
+python translator.py -i input_file
 ```
 
 This will create an `output.txt` file in the current directory.
@@ -39,13 +32,13 @@ This will create an `output.txt` file in the current directory.
 ### Specify Input and Output Files
 
 ```bash
-python genetic_data_converter.py -i input_file -o custom_output.txt
+python translator.py -i input_file -o custom_output.txt
 ```
 
 ### Command-Line Arguments
 
-- `-i` or `--input`: **Required**. Path to the input genetic data file
-- `-o` or `--output`: **Optional**. Path for the output file (default: `output.txt`)
+- `-i` or `--input`: **Required**. Path to the Circle input file
+- `-o` or `--output`: **Optional**. Path to the 23andme output-like file (default: `output.txt`)
 
 ## Input File Format
 
