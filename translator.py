@@ -23,15 +23,41 @@ def validate_input_files(input_file, output_file):
     except PermissionError:
         raise PermissionError(f"Cannot write to output file '{output_file}'")
 
-def convert_genetic_data(input_file, output_file):
+def load_rsid_list(rsid_file):
     """
-    Convert genetic data file from one format to another.
+    Load the list of rsids from a file.
     
     Args:
-        input_file (str): Path to the input genetic data file
-        output_file (str): Path to the output converted file
+        rsid_file (str): Path to the file containing the list of rsids.
+    
+    Returns:
+        set: A set of rsids to filter the output.
+    """
+    try:
+        with open(rsid_file, "r") as file:
+            return set(line.strip() for line in file if line.strip())
+    except FileNotFoundError:
+        raise FileNotFoundError(f"RSID list file '{rsid_file}' not found.")
+    except Exception as e:
+        raise Exception(f"Error reading RSID list file: {e}")
+
+def convert_genetic_data(input_file, output_file, reduced=False, rsid_file=None):
+    """
+    Convert genetic data file from one format to another, with optional filtering.
+    
+    Args:
+        input_file (str): Path to the input genetic data file.
+        output_file (str): Path to the output converted file.
+        reduced (bool): Whether to filter the output based on an RSID list.
+        rsid_file (str): Path to the RSID list file (required if reduced is True).
     """
     validate_input_files(input_file, output_file)
+    
+    rsid_set = set()
+    if reduced:
+        if not rsid_file:
+            raise ValueError("RSID list file must be provided when using --reduced.")
+        rsid_set = load_rsid_list(rsid_file)
     
     try:
         with open(input_file, "r") as infile, open(output_file, "w") as outfile:
@@ -58,6 +84,10 @@ def convert_genetic_data(input_file, output_file):
                     pos = columns[2]  # position
                     gt = columns[3].replace("/", "")  # Replace "/" with "" for genotype
                     
+                    # If reduced mode is enabled, filter by rsid
+                    if reduced and markername not in rsid_set:
+                        continue
+                    
                     # Write the transformed data to the output file
                     outfile.write(f"{markername}\t{chrom}\t{pos}\t{gt}\n")
                 
@@ -77,11 +107,17 @@ def main():
     parser.add_argument('-o', '--output', 
                         default='output.txt', 
                         help='Path to the 23andme output-like converted file (default: output.txt)')
+    parser.add_argument('--reduced', 
+                        action='store_true', 
+                        help='Enable reduced mode to filter output based on RSID list')
+    parser.add_argument('--rsid-file',
+                        default='rsid-list.txt',  
+                        help='Path to the RSID list file (required if --reduced is used)')
     
     args = parser.parse_args()
     
     try:
-        convert_genetic_data(args.input, args.output)
+        convert_genetic_data(args.input, args.output, args.reduced, args.rsid_file)
     except Exception as e:
         print(f"Error: {e}")
         sys.exit(1)

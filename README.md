@@ -3,7 +3,7 @@
 ## Overview
 
 This Python script converts genetic data files from Circle format to a 23andMe-like format. It provides a simple command-line tool to transform genetic data files by restructuring columns and formatting.
-This will allow you to use pages like genomelink.io, geneticgenie.org, selfdecode.com...
+This will allow you to use pages like genomelink.io, geneticgenie.org, selfdecode.com, geneticlifehacks.com...
 
 In order to get your CircleDNA raw data, you have to write an email to care[at]circledna.com with your information.
 
@@ -33,10 +33,18 @@ This will create an `output.txt` file in the current directory.
 python translator.py -i input_file -o custom_output.txt
 ```
 
-### Command-Line Arguments
+### Enable Reduced Mode with RSID Filtering
 
-- `-i` or `--input`: **Required**. Path to the Circle input file
-- `-o` or `--output`: **Optional**. Path to the 23andme output-like file (default: `output.txt`)
+To filter the output file so it only contains lines where the `markername` (rsid) is present in a provided RSID list file:
+
+```bash
+python translator.py -i input_file -o custom_output.txt --reduced --rsid-file rsid-list.txt
+```
+
+- `--reduced`: Enables reduced mode to filter the output based on an RSID list.
+- `--rsid-file`: Path to the RSID list file.
+
+This allows you to reduce the file size of the original CircleDNA data by selecting only specific RSIDs. The current rsid-list.txt is based on the data used by Geneticlifehacks.com. Thanks to [Debbie Moon](https://www.geneticlifehacks.com/about/) for providing it.
 
 ## Input File Format
 
